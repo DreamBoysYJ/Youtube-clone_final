@@ -3,5 +3,15 @@ extends base
 block title 
     h1 JOIN
 
-    form(action="") 
-        input(type="submit")
+    form(method="POST") 
+        input(name="id",type="text", placeholder="ID")
+        input(name="email", type="email", placeholder="E-MAIL")
+        input(name="password",type="password",placeholder="PASSWORD")
+        input(name="password2",type="password",placeholder="PASSWORD CONFIRM")
+        input(type="submit", value="Join")
+        hr
+        span
+            a(href="/login") &rarr; Already Have an account ? 
+
+
+        

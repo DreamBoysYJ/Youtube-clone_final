@@ -1,11 +1,16 @@
 import express from "express";
-import { login, join } from "../controllers/userControllers";
+import {
+  postLogin,
+  getLogin,
+  getJoin,
+  postJoin,
+} from "../controllers/userControllers";
 import { search } from "../controllers/videoControllers";
 
 const globalRouter = express.Router();
 
-globalRouter.get(`/login`, login);
-globalRouter.get(`/join`, join);
+globalRouter.route(`/login`).get(getLogin).post(postLogin);
+globalRouter.route(`/join`).get(getJoin).post(postJoin);
 globalRouter.get(`/search`, search);
 
 export default globalRouter;
