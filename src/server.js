@@ -27,6 +27,7 @@ const handleListening = () =>
 
 app.set("views", "src/views");
 app.set("view engine", "pug");
+app.use(express.urlencoded({ extended: true }));
 
 app.use(`/videos`, videoRouter);
 app.use(`/users`, userRouter);

@@ -18,6 +18,8 @@ html(lang="en")
                     a(href=`/login`) LOG IN 
                 li 
                     a(href=`/search`) SEARCH
+        if errorMessage 
+            span #{errorMessage}
 
         block title
 

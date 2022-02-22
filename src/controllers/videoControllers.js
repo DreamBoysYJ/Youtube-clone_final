@@ -7,3 +7,7 @@ export const watch = (req, res) => {
 
   return res.render("watch", { id });
 };
+
+export const home = (req, res) => {
+  return res.render("home");
+};
