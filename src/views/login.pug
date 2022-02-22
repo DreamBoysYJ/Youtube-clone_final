@@ -2,3 +2,11 @@ extends base
 
 block title 
     h1 LOGIN
+
+    form(method="POST") 
+        input(name="id",type="text", placeholder="ID")
+        input(name="password",type="password",placeholder="PASSWORD")
+        input(type="submit", value="Log in")
+        span
+            a(href="/join") &rarr; Still Don't Have an account ? 
+        hr
