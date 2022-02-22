@@ -2,7 +2,10 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
 export const logout = (req, res) => {
-  console.log("logout");
+  req.session.user = null;
+  req.session.loggedIn = false;
+  res.locals.loggedInUser = req.session.user;
+
   return res.redirect(`/`);
 };
 
@@ -48,5 +51,23 @@ export const postLogin = async (req, res) => {
   if (!matchPassword) {
     return res.render("login", { errorMessage: "PASSWORD doesn't match." });
   }
+  req.session.loggedIn = true;
+  req.session.user = user;
   return res.redirect("/");
+};
+
+export const myProfile = (req, res) => {
+  return res.render("profile");
+};
+
+export const getEdit = (req, res) => {
+  return res.render("edit-profile");
+};
+
+export const postEdit = async (req, res) => {
+  const { username, email } = req.body;
+  const user = res.locals.loggedInUser;
+  const id = user.id;
+  await User.findByIdAndUpdate(id, { username: username, email: email });
+  return res.render("edit-profile");
 };

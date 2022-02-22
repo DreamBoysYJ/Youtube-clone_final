@@ -4,6 +4,8 @@ import userRouter from "./routers/userRouter";
 import globalRouter from "./routers/globalRouter";
 import morgan from "morgan";
 import mongoose from "mongoose";
+import session from "express-session";
+import { localsMiddleware } from "./middlewares";
 
 mongoose.connect("mongodb://127.0.0.1:27017/youtube-final", {
   useNewUrlParser: true,
@@ -19,6 +21,7 @@ const handleOpen = () => {
 db.once("open", handleOpen);
 
 const app = express();
+const logger = morgan("dev");
 
 const PORT = 5000;
 
@@ -27,7 +30,16 @@ const handleListening = () =>
 
 app.set("views", "src/views");
 app.set("view engine", "pug");
+app.use(logger);
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "HELLO!",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(localsMiddleware);
 
 app.use(`/videos`, videoRouter);
 app.use(`/users`, userRouter);

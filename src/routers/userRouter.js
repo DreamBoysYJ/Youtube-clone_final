@@ -1,9 +1,9 @@
 import express from "express";
-import { logout, edit } from "../controllers/userControllers";
+import { myProfile, getEdit, postEdit } from "../controllers/userControllers";
 
 const userRouter = express.Router();
 
-userRouter.get(`/logout`, logout);
-userRouter.get(`/edit`, edit);
+userRouter.route(`/edit-profile`).get(getEdit).post(postEdit);
+userRouter.get(`/my-profile`, myProfile);
 
 export default userRouter;

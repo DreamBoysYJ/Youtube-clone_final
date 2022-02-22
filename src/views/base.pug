@@ -10,16 +10,25 @@ html(lang="en")
     body 
         header DREAM BOYS TV
 
-        nav 
-            ul 
-                li
-                    a(href=`/join`) JOIN 
-                li 
-                    a(href=`/login`) LOG IN 
-                li 
-                    a(href=`/search`) SEARCH
         if errorMessage 
             span #{errorMessage}
+        nav 
+            ul
+                li 
+                    a(href=`/search`) SEARCH
+                if loggedIn 
+                    li
+                        a(href=`/users/my-profile`) #{loggedInUser.username}의 Profile 
+                    li 
+                        a(href=`/logout`) LOG OUT
+                    li 
+                        a(href=`/users/edit-profile`) EDIT-Profile
+                else
+                    li
+                        a(href=`/join`) JOIN 
+                    li 
+                        a(href=`/login`) LOG IN 
+            
 
         block title
 
