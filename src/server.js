@@ -6,6 +6,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import session from "express-session";
 import { localsMiddleware } from "./middlewares";
+import MongoStore from "connect-mongo";
 
 mongoose.connect("mongodb://127.0.0.1:27017/youtube-final", {
   useNewUrlParser: true,
@@ -37,6 +38,9 @@ app.use(
     secret: "HELLO!",
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://127.0.0.1:27017/youtube-final",
+    }),
   })
 );
 app.use(localsMiddleware);
