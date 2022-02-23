@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import req from "express/lib/request";
 
 export const logout = (req, res) => {
   req.session.user = null;
@@ -68,6 +69,36 @@ export const postEdit = async (req, res) => {
   const { username, email } = req.body;
   const user = res.locals.loggedInUser;
   const id = user.id;
-  await User.findByIdAndUpdate(id, { username: username, email: email });
-  return res.render("edit-profile");
+  await User.findOneAndUpdate(id, { username, email });
+  const updatedUser = await User.findOne({ id });
+  req.session.user = updatedUser;
+  return res.redirect("/users/my-profile");
+};
+export const getChangePassword = (req, res) => {
+  return res.render("edit-password");
+};
+
+export const postChangePassword = async (req, res) => {
+  const { oldPassword, password, password2 } = req.body;
+  const user = res.locals.loggedInUser;
+  const recheckPassword = await bcrypt.compare(oldPassword, user.password);
+  if (!recheckPassword) {
+    return res.render("edit-password", {
+      errorMessage: "OLD Password doesn't match.",
+    });
+  }
+  if (password !== password2) {
+    return res.render("edit-password", {
+      errorMessage: "NEW Password doesn't match.",
+    });
+  }
+  if (oldPassword === password) {
+    return res.render("edit-password", { errorMessage: "SAME PASSWORD!" });
+  }
+  const newPassword = await bcrypt.hash(password, 5);
+  await User.findOneAndUpdate(user.id, { password: newPassword });
+  const userId = res.locals.loggedInUser.id;
+  const updatedUser = await User.findOne({ userId });
+  req.session.user = updatedUser;
+  return res.redirect("/login");
 };
