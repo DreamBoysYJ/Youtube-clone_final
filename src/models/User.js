@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, minlength: 2 },
   email: { type: String, required: true, unique: true },
   socialOnly: { type: Boolean, default: false },
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: `Video` }],
 });
 
 const User = mongoose.model("User", userSchema);

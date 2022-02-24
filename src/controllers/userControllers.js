@@ -25,6 +25,7 @@ export const postJoin = async (req, res) => {
   if (password !== password2) {
     return res.render("join", { errorMessage: "PASSWORD DOES NOT MATCH!" });
   }
+
   const userExists = await User.exists({ $or: [{ id }, { email }] });
   if (userExists) {
     return res.render("join", { errorMessage: "ID or E-MAIL already exists!" });
