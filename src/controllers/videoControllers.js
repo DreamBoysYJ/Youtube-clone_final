@@ -4,6 +4,7 @@ export const search = (req, res) => {
 
 export const watch = (req, res) => {
   const { id } = req.params;
+  
 
   return res.render("watch", { id });
 };
