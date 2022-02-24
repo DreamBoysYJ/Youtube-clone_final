@@ -7,7 +7,8 @@ block title
         input(name="username",type="text", placeholder="USER NAME", value=loggedInUser.username, required)
         input(name="email", type="email", placeholder="E-MAIL" value=loggedInUser.email required)        
         input(type="submit", value="Edit", )
-        span
-            a(href="edit-profile/change-password") &rarr; Change Password
+        if loggedInUser.socialOnly = false
+            span
+                a(href="edit-profile/change-password") &rarr; Change Password
         
 

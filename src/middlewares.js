@@ -3,3 +3,24 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.loggedInUser = req.session.user;
   next();
 };
+
+export const privateMiddleware = (req, res, next) => {
+  if (!req.session.loggedIn) {
+    return res.redirect("/login");
+  }
+  return next();
+};
+
+export const publicOnlyMiddleware = (req, res, next) => {
+  if (!req.session.loggedIn) {
+    return next();
+  }
+  return res.redirect("/");
+};
+
+export const socialLoginMiddleware = (req, res, next) => {
+  if (req.session.user.password === "") {
+    return res.redirect("/users/edit-profile");
+  }
+  return next();
+};

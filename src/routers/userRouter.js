@@ -8,16 +8,26 @@ import {
   startGithubLogin,
   finishGithubLogin,
 } from "../controllers/userControllers";
+import {
+  publicOnlyMiddleware,
+  privateMiddleware,
+  socialLoginMiddleware,
+} from "../middlewares";
 
 const userRouter = express.Router();
 
-userRouter.route(`/edit-profile`).get(getEdit).post(postEdit);
-userRouter.get(`/my-profile`, myProfile);
+userRouter
+  .route(`/edit-profile`)
+  .all(privateMiddleware)
+  .get(getEdit)
+  .post(postEdit);
+userRouter.get(`/my-profile`, privateMiddleware, myProfile);
 userRouter
   .route(`/edit-profile/change-password`)
+  .all(privateMiddleware, socialLoginMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
-userRouter.get(`/github/start`, startGithubLogin);
-userRouter.get(`/github/callback`, finishGithubLogin);
+userRouter.get(`/github/start`, publicOnlyMiddleware, startGithubLogin);
+userRouter.get(`/github/callback`, publicOnlyMiddleware, finishGithubLogin);
 
 export default userRouter;
