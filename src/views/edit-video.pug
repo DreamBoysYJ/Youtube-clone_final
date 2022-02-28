@@ -1,0 +1,12 @@
+extends base
+
+block title 
+    h1 EDIT #{video.title}
+
+    form(method="POST") 
+        input(name="title",type="text", placeholder="Title", value=video.title, required)
+        input(name="description", type="text", placeholder="Description" value=video.description required)  
+        input(name="hashtags", type="text", placeholder="Hashtags seperated by ,", value=video.hashtags.join())      
+        input(type="submit", value="Edit", )
+ 
+        

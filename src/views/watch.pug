@@ -1,8 +1,15 @@
 extends base
+include mixins/video
+
 block title
-    h1 #{id}
-    span Description 
-    h2 views 
-    h3 createdAt 
-    h4 author 
-    span comments
+    h3=video.title
+    p=video.description
+    small=video.createdAt
+    ul 
+        each hashtag in video.hashtags
+            li=hashtag
+
+    h4 
+        a(href=`${video.id}/edit`) &rarr; Edit Video 
+    h4 
+        a(href=`${video.id}/delete`) &rarr; Delete Video 

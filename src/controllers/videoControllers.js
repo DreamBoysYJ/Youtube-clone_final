@@ -9,14 +9,18 @@ export const search = (req, res) => {
   return res.render("search");
 };
 
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
   const { id } = req.params;
+  const video = await Video.findById(id);
 
-  return res.render("watch", { id });
+  return res.render("watch", { video });
 };
 
-export const home = (req, res) => {
-  return res.render("home");
+export const home = async (req, res) => {
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner");
+  return res.render("home", { videos });
 };
 
 export const getUpload = (req, res) => {
@@ -33,7 +37,7 @@ export const postUpload = async (req, res) => {
     const newVideo = await Video.create({
       title,
       description,
-      hashtags,
+      hashtags: Video.formatHashtags(hashtags),
       owner: _id,
     });
     const user = await User.findById(_id);
@@ -44,4 +48,27 @@ export const postUpload = async (req, res) => {
     console.log(error);
     return res.render("upload", { errorMessage: error._message });
   }
+};
+
+export const getEdit = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+
+  return res.render("edit-video", { video });
+};
+
+export const postEdit = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, hashtags } = req.body;
+  const video = await Video.findById(id);
+  await Video.findByIdAndUpdate(id, {
+    title,
+    description,
+    hashtags: await Video.formatHashtags(hashtags),
+  });
+  return res.redirect(`/videos/${id}`);
+};
+
+export const deleteVideo = (req, res) => {
+  return res.render("edit-video");
 };
