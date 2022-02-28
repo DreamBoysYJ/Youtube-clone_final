@@ -4,6 +4,9 @@ include mixins/video
 block title
     h3=video.title
     p=video.description
+    span Upload by 
+        a(href=`/users/${video.owner.id}/profile`) #{video.owner.username}
+    br
     small=video.createdAt
     ul 
         each hashtag in video.hashtags

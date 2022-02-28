@@ -11,7 +11,7 @@ export const search = (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("owner");
 
   return res.render("watch", { video });
 };
@@ -52,15 +52,28 @@ export const postUpload = async (req, res) => {
 
 export const getEdit = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
+  const {
+    user: { _id },
+  } = req.session;
+  const video = await Video.findById(id).populate("owner");
 
+  if (String(video.owner._id) !== String(_id)) {
+    return res.status(403).redirect("/");
+  }
   return res.render("edit-video", { video });
 };
 
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.findById(id);
+  const {
+    user: { _id },
+  } = req.session;
+  const video = await Video.findById(id).populate("owner");
+  if (String(video.owner._id) !== String(_id)) {
+    return res.status(403).redirect("/");
+  }
+
   await Video.findByIdAndUpdate(id, {
     title,
     description,
@@ -69,6 +82,15 @@ export const postEdit = async (req, res) => {
   return res.redirect(`/videos/${id}`);
 };
 
-export const deleteVideo = (req, res) => {
-  return res.render("edit-video");
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  const {
+    user: { _id },
+  } = req.session;
+  const video = await Video.findById(id);
+  if (String(video.owner) !== String(_id)) {
+    return res.status(403).redirect("/");
+  }
+  await Video.findByIdAndRemove(id);
+  return res.redirect("/");
 };

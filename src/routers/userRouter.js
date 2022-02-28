@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  myProfile,
+  seeProfile,
   getEdit,
   postEdit,
   getChangePassword,
@@ -21,7 +21,6 @@ userRouter
   .all(privateMiddleware)
   .get(getEdit)
   .post(postEdit);
-userRouter.get(`/my-profile`, privateMiddleware, myProfile);
 userRouter
   .route(`/edit-profile/change-password`)
   .all(privateMiddleware, socialLoginMiddleware)
@@ -29,5 +28,6 @@ userRouter
   .post(postChangePassword);
 userRouter.get(`/github/start`, publicOnlyMiddleware, startGithubLogin);
 userRouter.get(`/github/callback`, publicOnlyMiddleware, finishGithubLogin);
+userRouter.get(`/:id/profile`, seeProfile);
 
 export default userRouter;

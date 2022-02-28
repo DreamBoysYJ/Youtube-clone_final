@@ -20,7 +20,7 @@ html(lang="en")
                     a(href=`/`) HOME
                 if loggedIn 
                     li
-                        a(href=`/users/my-profile`) #{loggedInUser.username}의 Profile 
+                        a(href=`/users/${loggedInUser.id}/profile`) #{loggedInUser.username}의 Profile 
                     li 
                         a(href=`/logout`) LOG OUT
                     li 

@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import Video from "../models/Video.js";
 
 export const logout = (req, res) => {
   req.session.user = null;
@@ -58,8 +59,11 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 };
 
-export const myProfile = (req, res) => {
-  return res.render("profile");
+export const seeProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ id });
+  const videos = await Video.find({ owner: user._id });
+  return res.render("profile", { user, videos });
 };
 
 export const getEdit = (req, res) => {
