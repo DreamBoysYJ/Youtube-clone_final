@@ -12,6 +12,7 @@ import {
   publicOnlyMiddleware,
   privateMiddleware,
   socialLoginMiddleware,
+  avatarUpload,
 } from "../middlewares";
 
 const userRouter = express.Router();
@@ -20,7 +21,7 @@ userRouter
   .route(`/edit-profile`)
   .all(privateMiddleware)
   .get(getEdit)
-  .post(postEdit);
+  .post(avatarUpload.single("avatar"), postEdit);
 userRouter
   .route(`/edit-profile/change-password`)
   .all(privateMiddleware, socialLoginMiddleware)

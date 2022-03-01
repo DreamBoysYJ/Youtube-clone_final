@@ -4,9 +4,9 @@ block title
     h1 JOIN
     
     form(method="POST", enctype="multipart/form-data")
-        label(for="video") Video File 
+        label(for="video") Video 
         input(type="file", accept="video/*", required, id="video", name="video")
-        label(for="thumb") Thumbnail File 
+        label(for="thumb") Image
         input(type="file", accept="image/*", required, id="thumb", name="thumb")
         input(placeholder="Title", required, type="text", name="title", minlength=2, 
         maxlength=80)

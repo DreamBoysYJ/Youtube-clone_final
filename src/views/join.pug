@@ -3,7 +3,9 @@ extends base
 block title 
     h1 JOIN
 
-    form(method="POST") 
+    form(method="POST", enctype="multipart/form-data") 
+        label(for="avatar") Avatar Img
+        input(type="file", accept="image/*", required, id="avatar", name="avatar")
         input(name="id",type="text", placeholder="ID")
         input(name="email", type="email", placeholder="E-MAIL")
         input(name="username",type="text", placeholder="USER NAME")

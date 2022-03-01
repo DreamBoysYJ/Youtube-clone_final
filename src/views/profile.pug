@@ -3,6 +3,7 @@ include mixins/video
 
 block title 
     h1 #{user.username}의 Profile 
+    img(src="/" + user.avatarUrl)
     
     each video in videos 
             +video(video)

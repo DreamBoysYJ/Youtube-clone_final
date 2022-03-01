@@ -3,8 +3,6 @@ import fetch from "node-fetch";
 import multer from "multer";
 import User from "../models/User";
 
-const uploadVideo = multer({ dest: "uploads/" });
-
 export const search = (req, res) => {
   return res.render("search");
 };
@@ -33,9 +31,12 @@ export const postUpload = async (req, res) => {
     files: { video, thumb },
   } = req;
   const { _id } = req.session.user;
+
   try {
     const newVideo = await Video.create({
       title,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       description,
       hashtags: Video.formatHashtags(hashtags),
       owner: _id,

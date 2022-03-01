@@ -29,7 +29,7 @@ const PORT = 5000;
 const handleListening = () =>
   console.log(`server listening on http://localhost:${PORT}!`);
 
-app.set("views", "src/views");
+app.set("views", process.cwd() + "/src/views");
 app.set("view engine", "pug");
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
@@ -44,7 +44,7 @@ app.use(
   })
 );
 app.use(localsMiddleware);
-
+app.use("/uploads", express.static("uploads"));
 app.use(`/videos`, videoRouter);
 app.use(`/users`, userRouter);
 app.use(`/`, globalRouter);

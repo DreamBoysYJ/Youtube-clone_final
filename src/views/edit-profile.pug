@@ -3,7 +3,11 @@ extends base
 block title
     h1 EDIT #{loggedInUser.username}의 PROFILE
 
-    form(method="POST") 
+    img(src="/" + loggedInUser.avatarUrl)
+
+    form(method="POST", enctype="multipart/form-data") 
+        label(for="avatar") Avatar Img
+        input(type="file", accept="image/*", id="avatar", name="avatar")
         input(name="username",type="text", placeholder="USER NAME", value=loggedInUser.username, required)
         input(name="email", type="email", placeholder="E-MAIL" value=loggedInUser.email required)        
         input(type="submit", value="Edit", )

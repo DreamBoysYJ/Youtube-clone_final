@@ -22,6 +22,7 @@ export const getJoin = (req, res) => res.render("join");
 export const postJoin = async (req, res) => {
   const {
     body: { id, username, password, password2, email },
+    file: { path: avatarUrl },
   } = req;
   if (password !== password2) {
     return res.render("join", { errorMessage: "PASSWORD DOES NOT MATCH!" });
@@ -33,7 +34,13 @@ export const postJoin = async (req, res) => {
   }
   const cryptPassword = await bcrypt.hash(password, 5);
 
-  await User.create({ id, password: cryptPassword, email, username });
+  await User.create({
+    id,
+    password: cryptPassword,
+    avatarUrl,
+    email,
+    username,
+  });
 
   return res.redirect("/login");
 };
@@ -72,12 +79,20 @@ export const getEdit = (req, res) => {
 
 export const postEdit = async (req, res) => {
   const { username, email } = req.body;
+  const { path: avatarUrl } = req.file;
   const user = res.locals.loggedInUser;
   const id = user.id;
-  await User.findOneAndUpdate(id, { username, email });
+  await User.findOneAndUpdate(
+    { id },
+    {
+      avatarUrl,
+      username,
+      email,
+    }
+  );
   const updatedUser = await User.findOne({ id });
   req.session.user = updatedUser;
-  return res.redirect("/users/my-profile");
+  return res.redirect(`/users/${id}/profile`);
 };
 export const getChangePassword = (req, res) => {
   return res.render("edit-password");

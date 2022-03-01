@@ -2,6 +2,10 @@ extends base
 include mixins/video
 
 block title
+
+    video(src= "/" + video.fileUrl, controls)
+    
+
     h3=video.title
     p=video.description
     span Upload by 
