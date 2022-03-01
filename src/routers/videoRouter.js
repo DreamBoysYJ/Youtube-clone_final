@@ -1,5 +1,4 @@
 import express from "express";
-import multer from "multer";
 import {
   watch,
   getUpload,
@@ -8,7 +7,7 @@ import {
   postEdit,
   deleteVideo,
 } from "../controllers/videoControllers";
-import { videoUpload, avatarUpload, privateMiddleware } from "../middlewares";
+import { videoUpload } from "../middlewares";
 
 const videoRouter = express.Router();
 

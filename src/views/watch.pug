@@ -16,7 +16,9 @@ block title
         each hashtag in video.hashtags
             li=hashtag
 
-    h4 
-        a(href=`${video.id}/edit`) &rarr; Edit Video 
-    h4 
-        a(href=`${video.id}/delete`) &rarr; Delete Video 
+    if video.owner.id === loggedInUser.id
+
+        h4 
+            a(href=`${video.id}/edit`) &rarr; Edit Video 
+        h4 
+            a(href=`${video.id}/delete`) &rarr; Delete Video 

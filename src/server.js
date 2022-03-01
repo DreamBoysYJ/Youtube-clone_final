@@ -3,23 +3,11 @@ import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 import globalRouter from "./routers/globalRouter";
 import morgan from "morgan";
-import mongoose from "mongoose";
 import session from "express-session";
 import { localsMiddleware } from "./middlewares";
 import MongoStore from "connect-mongo";
-
-mongoose.connect("mongodb://127.0.0.1:27017/youtube-final", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
-
-const handleOpen = () => {
-  console.log("db open");
-};
-
-db.once("open", handleOpen);
+import "./db";
+import "dotenv/config";
 
 const app = express();
 const logger = morgan("dev");
@@ -39,7 +27,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: "mongodb://127.0.0.1:27017/youtube-final",
+      mongoUrl: process.env.DB_URL,
     }),
   })
 );

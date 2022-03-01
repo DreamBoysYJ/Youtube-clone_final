@@ -2,18 +2,9 @@ import Video from "../models/Video";
 import fetch from "node-fetch";
 import multer from "multer";
 import User from "../models/User";
+import "dotenv/config";
 
-export const search = (req, res) => {
-  return res.render("search");
-};
-
-export const watch = async (req, res) => {
-  const { id } = req.params;
-  const video = await Video.findById(id).populate("owner");
-
-  return res.render("watch", { video });
-};
-
+// HOME PAGE
 export const home = async (req, res) => {
   const videos = await Video.find({})
     .sort({ createdAt: "desc" })
@@ -21,6 +12,12 @@ export const home = async (req, res) => {
   return res.render("home", { videos });
 };
 
+// SEARCH
+export const search = (req, res) => {
+  return res.render("search");
+};
+
+// CREATE (UPLOAD)
 export const getUpload = (req, res) => {
   return res.render("upload");
 };
@@ -44,32 +41,46 @@ export const postUpload = async (req, res) => {
     const user = await User.findById(_id);
     user.videos.push(newVideo._id);
     user.save();
-    return res.redirect(`/`);
+    return res.status(201).redirect(`/`);
   } catch (error) {
     console.log(error);
-    return res.render("upload", { errorMessage: error._message });
+    return res.status(500).render("upload", { errorMessage: error._message });
   }
 };
 
-export const getEdit = async (req, res) => {
+// READ
+export const watch = async (req, res) => {
   const { id } = req.params;
+  const video = await Video.findById(id).populate("owner");
+
+  return res.render("watch", { video });
+};
+
+// UPDATE (EDIT)
+export const getEdit = async (req, res) => {
   const {
-    user: { _id },
-  } = req.session;
+    params: { id },
+    session: {
+      user: { _id },
+    },
+  } = req;
   const video = await Video.findById(id).populate("owner");
 
   if (String(video.owner._id) !== String(_id)) {
     return res.status(403).redirect("/");
   }
-  return res.render("edit-video", { video });
+  return res.status(200).render("edit-video", { video });
 };
 
 export const postEdit = async (req, res) => {
-  const { id } = req.params;
-  const { title, description, hashtags } = req.body;
   const {
-    user: { _id },
-  } = req.session;
+    params: { id },
+    body: { title, description, hashtags },
+    session: {
+      user: { _id },
+    },
+  } = req;
+
   const video = await Video.findById(id).populate("owner");
   if (String(video.owner._id) !== String(_id)) {
     return res.status(403).redirect("/");
@@ -80,8 +91,10 @@ export const postEdit = async (req, res) => {
     description,
     hashtags: await Video.formatHashtags(hashtags),
   });
-  return res.redirect(`/videos/${id}`);
+  return res.status(200).redirect(`/videos/${id}`);
 };
+
+// DELETE
 
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
@@ -93,5 +106,5 @@ export const deleteVideo = async (req, res) => {
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndRemove(id);
-  return res.redirect("/");
+  return res.status(200).redirect("/");
 };
