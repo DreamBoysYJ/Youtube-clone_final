@@ -13,8 +13,18 @@ export const home = async (req, res) => {
 };
 
 // SEARCH
-export const search = (req, res) => {
-  return res.render("search");
+export const search = async (req, res) => {
+  let videos = [];
+  const { keyword } = req.query;
+  if (keyword) {
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(`^.*${keyword}.*`, "i"),
+      },
+    }).populate("owner");
+  }
+
+  return res.render("search", { videos });
 };
 
 // CREATE (UPLOAD)

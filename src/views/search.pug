@@ -1,4 +1,15 @@
 extends base
+include mixins/video
 
 block title 
-    h1 SEARCH
+    
+        form(method="GET")
+            input(type="text", placeholder="Search Video!", required, minlength=2, name="keyword")
+            button Search
+
+    
+        each video in videos 
+            +video(video)
+
+        else 
+            span Nothing Found
