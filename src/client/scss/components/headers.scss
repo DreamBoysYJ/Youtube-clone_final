@@ -1,0 +1,36 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 40px;
+
+  i.fab.fa-youtube {
+    color: rgb(36, 241, 241);
+    font-size: 40px;
+    font-weight: 800;
+  }
+  nav {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    ul {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li {
+      margin-left: 30px;
+      font-size: 24px;
+      font-weight: 600;
+      text-transform: uppercase;
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+  }
+}

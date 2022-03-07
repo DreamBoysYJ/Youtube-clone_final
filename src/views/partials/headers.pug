@@ -1,0 +1,28 @@
+header
+        a(href="/")
+            i.fab.fa-youtube  DREAM TV
+            
+        nav 
+            ul
+                li 
+                    a(href=`/search`)
+                        i.fas.fa-search
+                        
+                if loggedIn 
+                    li 
+                        a(href=`/videos/upload`)
+                            i.fas.fa-video
+                    li
+                        a(href=`/users/${loggedInUser.id}/profile`)
+                            img(src="/" + loggedInUser.avatarUrl)
+                    li 
+                        a(href=`/users/edit-profile`) EDIT-Profile
+                            
+                    li 
+                        a(href=`/logout`) LOG OUT
+                    
+                else
+                    li
+                        a(href=`/join`) JOIN 
+                    li 
+                        a(href=`/login`) LOG IN 

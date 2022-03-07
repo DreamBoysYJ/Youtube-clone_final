@@ -4,37 +4,13 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
         link(rel="stylesheet", href="/static/css/styles.css")
         
-        title Youtube-alone
+        title DREAM BOYS TV
     body 
-        header DREAM BOYS TV
+        include partials/headers
 
-        if errorMessage 
-            span #{errorMessage}
-        nav 
-            ul
-                li 
-                    a(href=`/search`) SEARCH
-                li 
-                    a(href=`/`) HOME
-                if loggedIn 
-                    li
-                        a(href=`/users/${loggedInUser.id}/profile`) #{loggedInUser.username}의 Profile 
-                    li 
-                        a(href=`/logout`) LOG OUT
-                    li 
-                        a(href=`/users/edit-profile`) EDIT-Profile
-                    li 
-                        a(href=`/videos/upload`) Upload Video
-                    
-                else
-                    li
-                        a(href=`/join`) JOIN 
-                    li 
-                        a(href=`/login`) LOG IN 
-            
 
         block title
 
@@ -43,5 +19,5 @@ html(lang="en")
 
 
 
-        include includes/footer
+        include partials/footer
         script(src="/static/js/main.js") 

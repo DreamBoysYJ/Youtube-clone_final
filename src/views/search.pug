@@ -3,9 +3,9 @@ include mixins/video
 
 block title 
     
-        form(method="GET")
-            input(type="text", placeholder="Search Video!", required, minlength=2, name="keyword")
-            button Search!
+        form.search__form(method="GET")
+            input(type="text", placeholder="Video title or ...", required, minlength=2, name="keyword")
+            button Search
 
     
         each video in videos 

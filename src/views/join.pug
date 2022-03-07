@@ -1,7 +1,7 @@
 extends base
 
 block title 
-    h1 JOIN
+    
 
     form(method="POST", enctype="multipart/form-data") 
         label(for="avatar") Avatar Img
@@ -12,9 +12,9 @@ block title
         input(name="password",type="password",placeholder="PASSWORD")
         input(name="password2",type="password",placeholder="PASSWORD CONFIRM")
         input(type="submit", value="Join")
-        span
-            a(href="/login") &rarr; Already Have an account ? 
-        hr
+        button.join__btn
+            a(href="/login") &rarr; Already Have an Account ? 
+        
 
 
         

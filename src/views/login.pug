@@ -1,15 +1,20 @@
 extends base
 
 block title 
-    h1 LOGIN
+    
 
     form(method="POST") 
         input(name="id",type="text", placeholder="ID")
         input(name="password",type="password",placeholder="PASSWORD")
-        input(type="submit", value="Log in")
-        span
-            a(href="/users/github/start") &rarr; Countinue with Github
+        input(type="submit", value="Log In")
+
+        div.social-login
+            button
+                a(href="/users/github/start").fab.fa-github
+            button
+                a(href="/users/github/start").fab.fa-google
+            button
+                a(href="/users/github/start").fab.fa-apple
         
-        br
-        span
-            a(href="/join") &rarr; Still Don't Have an account ? 
+        button.join__btn
+            a(href="/join") &rarr; Still Don't Have an Account?

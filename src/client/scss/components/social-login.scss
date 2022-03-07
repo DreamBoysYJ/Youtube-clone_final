@@ -1,0 +1,12 @@
+.social-login {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 25px;
+  button {
+    border-style: groove;
+    font-size: 40px;
+    border-radius: 50%;
+    background-color: white;
+  }
+}
