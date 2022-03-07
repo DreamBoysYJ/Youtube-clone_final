@@ -1,0 +1,27 @@
+.video-mixin {
+  .video-mixin__thumb {
+    margin-bottom: 10px;
+    img {
+      height: 140px;
+      width: 240px;
+      background-position: center;
+      border-radius: 8px;
+    }
+  }
+  .video-mixin__data {
+    .video-mixin__title {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .video-mixin__meta {
+      font-size: 12px;
+    }
+  }
+}
+
+.video-grid {
+  display: grid;
+  gap: 50px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}

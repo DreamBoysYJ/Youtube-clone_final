@@ -2,8 +2,12 @@ extends base
 include mixins/video
 
 block title 
-    h1 #{user.username}의 Profile 
-    img(src="/" + user.avatarUrl)
-    
-    each video in videos 
-            +video(video)
+    div.profile__info
+        img.profile__img(src="/" + user.avatarUrl)
+        span #{user.username}
+
+    div.profile__video Uploaded Videos
+
+    div.video-grid
+        each video in videos 
+                +video(video)

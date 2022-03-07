@@ -2,25 +2,29 @@ extends base
 include mixins/video
 
 block title
-
-    video(src= "/" + video.fileUrl, controls)
     
 
-    h3=video.title
-    p=video.description
-    span Upload by 
-        a(href=`/users/${video.owner.id}/profile`) #{video.owner.username}
-    br
-    small=video.createdAt
-    ul 
-        each hashtag in video.hashtags
-            li=hashtag
+    video(src= "/" + video.fileUrl, controls)
+    div.video-info
+        div.video-info__infos
+            ul 
+                each hashtag in video.hashtags
+                    li=hashtag
+            h3.video__title=video.title
+            small 조회수 : #{video.meta.views}회  • 
+            small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday:'long', year:'numeric', month: 'long', day: 'numeric'})
+            hr
+            p.video-info__desc=video.description
+        if video.owner.id === loggedInUser.id
+                div.video__modify
+                    h4 
+                        a(href=`${video.id}/edit`) EDIT    
+                    h4 
+                        a(href=`${video.id}/delete`) DELETE
 
-    if video.owner.id === loggedInUser.id
+    div.profile__info
+        
+        img.profile__img(src="/" + video.owner.avatarUrl)
+        span.profile__username
+            a(href=`/users/${video.owner.id}/profile`)=video.owner.username
 
-        h4 
-            a(href=`${video.id}/edit`) &rarr; Edit Video 
-        h4 
-            a(href=`${video.id}/delete`) &rarr; Delete Video 
-    else 
-        span  

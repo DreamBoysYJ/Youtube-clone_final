@@ -1,0 +1,40 @@
+ul {
+  margin: 10px 0px;
+  display: flex;
+  li {
+    margin-right: 10px;
+    font-size: 12px;
+  }
+}
+
+.video__title {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.video-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.video__modify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h4 {
+    margin: 0 10px;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px;
+    color: black;
+    background-color: rgb(36, 241, 241);
+    border-radius: 5px;
+  }
+}
+
+.video-info__desc {
+  font-size: 14px;
+}
